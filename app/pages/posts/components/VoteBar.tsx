@@ -1,10 +1,14 @@
 import { IconButton, Image, Text, VStack } from "@chakra-ui/react"
 import { Post } from "db"
-import { useState } from "react"
+import { useLayoutEffect, useState } from "react"
 
 export default function VoteBar({ post }: { post: Post }) {
   const [votes, setVotes] = useState(post.votes)
   const [voteStatus, setVoteStatus] = useState(0)
+
+  useLayoutEffect(() => {
+    setVotes(post.votes)
+  }, [post])
 
   const handleVote = (action: string) => {
     if (action === "up") {

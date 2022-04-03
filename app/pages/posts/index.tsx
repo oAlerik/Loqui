@@ -7,11 +7,13 @@ import { useSession } from "blitz"
 import Layout from "app/core/layouts/Layout"
 import getAllPosts from "./queries/getAllPosts"
 import PostEntry from "./components/PostEntry"
+import { useState } from "react"
 
 export default function Posts() {
   const session = useSession()
   const [createPostMutation] = useMutation(createPost)
-  const [allPosts] = useQuery(getAllPosts, undefined)
+  const [postsQuery] = useQuery(getAllPosts, undefined)
+  const [posts, setPosts] = useState(postsQuery)
 
   const newPost = async () => {
     console.log(session)
@@ -22,6 +24,17 @@ export default function Posts() {
     })
   }
 
+  const onSort = (sort: string) => {
+    console.log(sort)
+    const newList = [...posts]
+
+    if (sort === "Top") {
+      newList.sort((a, b) => (a.votes > b.votes ? 1 : -1))
+      console.log(newList)
+      setPosts(newList)
+    }
+  }
+
   return (
     <VStack p={4} bg="gray.100">
       <Box pb={4}>
@@ -30,10 +43,10 @@ export default function Posts() {
 
       <Flex>
         <VStack w="full">
-          <FilterBar />
+          <FilterBar onSort={onSort} />
           <Button onClick={() => newPost()}>CREATE</Button>
 
-          {allPosts.map((post, i) => (
+          {posts.map((post, i) => (
             <PostEntry key={i} post={post} />
           ))}
         </VStack>

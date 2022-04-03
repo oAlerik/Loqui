@@ -20,6 +20,7 @@ model Post {
   votes         Int
   community     Community @relation(fields: [communityName], references: [name])
   communityName String
+  createdAt     DateTime  @default(now())
 }
 
 model Community {

@@ -11,7 +11,7 @@ import {
 } from "@chakra-ui/react"
 import { useState } from "react"
 
-export default function FilterBar() {
+export default function FilterBar({ onSort }: { onSort: (sort: string) => void }) {
   const buttons = [
     { name: "Hot", icon: "fire", active: true },
     { name: "New", icon: "new", active: false },
@@ -30,6 +30,7 @@ export default function FilterBar() {
       }
     })
 
+    onSort(newBtns[i]!.name)
     setBtns(newBtns)
   }
 
