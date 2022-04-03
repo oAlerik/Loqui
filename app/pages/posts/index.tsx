@@ -6,6 +6,7 @@ import createPost from "./mutations/createPost"
 import { useSession } from "blitz"
 import Layout from "app/core/layouts/Layout"
 import getAllPosts from "./queries/getAllPosts"
+import PostEntry from "./components/PostEntry"
 
 export default function Posts() {
   const session = useSession()
@@ -33,10 +34,7 @@ export default function Posts() {
           <Button onClick={() => newPost()}>CREATE</Button>
 
           {allPosts.map((post, i) => (
-            <Box key={i}>
-              <Text>{post.title}</Text>
-              <Text>{post.content}</Text>
-            </Box>
+            <PostEntry key={i} post={post} />
           ))}
         </VStack>
 

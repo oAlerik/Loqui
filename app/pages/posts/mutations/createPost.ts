@@ -13,6 +13,8 @@ export default function createPost(post: CreatePost) {
       title,
       content,
       authorId,
+      votes: 0,
+      communityName: "Comedy",
     },
   })
 }

@@ -13,10 +13,19 @@ generator client {
 // --------------------------------------
 
 model Post {
-  id       String @id @default(cuid())
-  title    String
-  content  String
-  authorId Int
+  id            String    @id @default(cuid())
+  title         String
+  content       String
+  authorId      Int
+  votes         Int
+  community     Community @relation(fields: [communityName], references: [name])
+  communityName String
+}
+
+model Community {
+  name  String @unique
+  posts Post[]
+  // slug     String @unique
 }
 
 model User {
