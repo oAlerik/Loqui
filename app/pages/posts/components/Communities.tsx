@@ -1,14 +1,4 @@
-import {
-  Box,
-  Button,
-  Circle,
-  Heading,
-  HStack,
-  IconButton,
-  Image,
-  Text,
-  VStack,
-} from "@chakra-ui/react"
+import { Box, Button, Circle, Heading, HStack, IconButton, Image, Text } from "@chakra-ui/react"
 import { AddIcon } from "@chakra-ui/icons"
 import getAllCommunities from "app/communities/queries/getAllCommunities"
 import { useQuery } from "blitz"
