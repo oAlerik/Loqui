@@ -1,14 +1,4 @@
-import {
-  Box,
-  Button,
-  HStack,
-  Image,
-  Tab,
-  TabList,
-  TabPanel,
-  TabPanels,
-  Tabs,
-} from "@chakra-ui/react"
+import { Box, Button, HStack, Image } from "@chakra-ui/react"
 import { useState } from "react"
 
 export default function FilterBar({ onSort }: { onSort: (sort: string) => void }) {
@@ -55,29 +45,6 @@ export default function FilterBar({ onSort }: { onSort: (sort: string) => void }
             {btn.name}
           </Button>
         ))}
-
-        {/* <Tabs variant='soft-rounded' colorScheme='green'>
-        <TabList>
-          {btns.map((btn, i) => (
-            <Tab key={i}>
-              <HStack
-                color={btn.active ? 'blue.500' : 'gray.500'}
-                onClick={() => handleClick(i)}>
-                {btn.name}
-              </HStack>
-            </Tab>
-          ))} */}
-        {/* <Tab>Tab 2</Tab>
-        </TabList>
-        <TabPanels>
-          <TabPanel>
-            <p>one!</p>
-          </TabPanel>
-          <TabPanel>
-            <p>two!</p>
-          </TabPanel>
-        </TabPanels>
-      </Tabs> */}
       </HStack>
     </Box>
   )

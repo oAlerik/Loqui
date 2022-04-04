@@ -14,7 +14,7 @@ export default function createPost(post: CreatePost) {
       content,
       authorId,
       votes: 0,
-      communityName: "Comedy",
+      community: "Comedy",
       createdAt: new Date(),
     },
   })

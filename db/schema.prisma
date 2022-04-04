@@ -16,16 +16,30 @@ model Post {
   id            String    @id @default(cuid())
   title         String
   content       String
+  author        User      @relation(fields: [authorId], references: [id])
   authorId      Int
+  comments      Comment[]
   votes         Int
-  community     Community @relation(fields: [communityName], references: [name])
-  communityName String
+  communityName Community @relation(fields: [community], references: [name])
+  community     String
   createdAt     DateTime  @default(now())
 }
 
+model Comment {
+  id        String   @id @default(cuid())
+  text      String
+  author    User     @relation(fields: [authorId], references: [id])
+  authorId  Int
+  post      Post     @relation(fields: [postId], references: [id])
+  postId    String
+  createdAt DateTime @default(now())
+}
+
 model Community {
-  name  String @unique
-  posts Post[]
+  id      String @id @default(cuid())
+  name    String @unique
+  members User[]
+  posts   Post[]
   // slug     String @unique
 }
 
@@ -37,6 +51,10 @@ model User {
   email          String   @unique
   hashedPassword String?
   role           String   @default("USER")
+
+  posts       Post[]
+  comments    Comment[]
+  communities Community[]
 
   tokens   Token[]
   sessions Session[]
