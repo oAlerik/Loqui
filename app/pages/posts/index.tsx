@@ -8,6 +8,7 @@ import Layout from "app/core/layouts/Layout"
 import getAllPosts from "./queries/getAllPosts"
 import PostEntry from "./components/PostEntry"
 import { useState } from "react"
+import Communities from "./components/Communities"
 
 export default function Posts() {
   const session = useSession()
@@ -41,8 +42,8 @@ export default function Posts() {
         <TrendingToday />
       </Box>
 
-      <Flex>
-        <VStack w="full">
+      <Flex maxW="100ch" gap={6}>
+        <VStack w="60ch">
           <FilterBar onSort={onSort} />
           <Button onClick={() => newPost()}>CREATE</Button>
 
@@ -51,8 +52,8 @@ export default function Posts() {
           ))}
         </VStack>
 
-        <VStack>
-          <Text px="4">COMMUNITIES</Text>
+        <VStack w="30ch">
+          <Communities />
           <Text>HELP ETC.</Text>
         </VStack>
       </Flex>

@@ -36,8 +36,10 @@ model Comment {
 }
 
 model Community {
-  id      String @id @default(cuid())
-  name    String @unique
+  id      String  @id @default(cuid())
+  name    String  @unique
+  picture String
+  banner  String?
   members User[]
   posts   Post[]
   // slug     String @unique
