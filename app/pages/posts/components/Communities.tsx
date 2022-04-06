@@ -1,4 +1,4 @@
-import { Box, Circle, Heading, HStack, IconButton, Image, Text } from "@chakra-ui/react"
+import { Box, Circle, Heading, HStack, IconButton, Image, Text, useToast } from "@chakra-ui/react"
 import { AddIcon, MinusIcon } from "@chakra-ui/icons"
 import getAllCommunities from "app/communities/queries/getAllCommunities"
 import getCurrentUser from "app/users/queries/getCurrentUser"
@@ -14,6 +14,7 @@ type CommunityListType = {
 }
 
 export default function Communities() {
+  const toast = useToast()
   const [notJoined, setNotJoined] = useState<string[]>([])
   const [user] = useQuery(getCurrentUser, undefined)
   const [communities] = useQuery(getAllCommunities, { communities: [] })
@@ -22,23 +23,36 @@ export default function Communities() {
 
   useEffect(() => {
     const resindexes = user?.communities.reduce((c, o, i) => ((c[o.id] = i), c), []) || []
-
-    // if (resindexes.length > 0) {
     const ids = communities.filter((o) => resindexes[o?.id] === undefined).map((o) => o.id)
     setNotJoined(ids ?? [])
-    // }
   }, [user?.communities, communities])
 
   const handleClick = async (isJoin: boolean, cid: string) => {
     if (user?.id) {
       if (isJoin) {
         const res = await joinCommunityMutation({ userId: user.id, communityId: cid })
-        res && setNotJoined(notJoined.filter((o) => o !== cid))
+        if (!res) return
+
+        setNotJoined(notJoined.filter((o) => o !== cid))
+        toast({
+          title: `Joined j/${res.name}`,
+          status: "success",
+          variant: "left-accent",
+          duration: 3000,
+        })
       }
 
       if (!isJoin) {
         const res = await leaveCommunityMutation({ userId: user.id, communityId: cid })
-        res && setNotJoined([...notJoined, cid])
+        if (!res) return
+
+        setNotJoined([...notJoined, cid])
+        toast({
+          title: `Left j/${res.name}`,
+          status: "warning",
+          variant: "left-accent",
+          duration: 3000,
+        })
       }
     }
   }
