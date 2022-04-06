@@ -3,7 +3,7 @@ import db from "db"
 type CreatePost = {
   title: string
   content: string
-  authorId: number
+  authorId: string
 }
 
 export default function createPost(post: CreatePost) {

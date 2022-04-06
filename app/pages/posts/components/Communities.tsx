@@ -1,7 +1,11 @@
-import { Box, Button, Circle, Heading, HStack, IconButton, Image, Text } from "@chakra-ui/react"
-import { AddIcon } from "@chakra-ui/icons"
+import { Box, Circle, Heading, HStack, IconButton, Image, Text } from "@chakra-ui/react"
+import { AddIcon, MinusIcon } from "@chakra-ui/icons"
 import getAllCommunities from "app/communities/queries/getAllCommunities"
-import { useQuery } from "blitz"
+import getCurrentUser from "app/users/queries/getCurrentUser"
+import { useMutation, useQuery } from "blitz"
+import { useEffect, useState } from "react"
+import joinCommunity from "app/communities/mutations/joinCommunity"
+import leaveCommunity from "app/communities/mutations/leaveCommunity"
 
 type CommunityListType = {
   id: string
@@ -10,21 +14,61 @@ type CommunityListType = {
 }
 
 export default function Communities() {
+  const [notJoined, setNotJoined] = useState<string[]>([])
+  const [user] = useQuery(getCurrentUser, undefined)
   const [communities] = useQuery(getAllCommunities, { communities: [] })
+  const [joinCommunityMutation] = useMutation(joinCommunity)
+  const [leaveCommunityMutation] = useMutation(leaveCommunity)
 
-  console.log(communities)
+  useEffect(() => {
+    const resindexes = user?.communities.reduce((c, o, i) => ((c[o.id] = i), c), []) || []
+
+    // if (resindexes.length > 0) {
+    const ids = communities.filter((o) => resindexes[o?.id] === undefined).map((o) => o.id)
+    setNotJoined(ids ?? [])
+    // }
+  }, [user?.communities, communities])
+
+  const handleClick = async (isJoin: boolean, cid: string) => {
+    if (user?.id) {
+      if (isJoin) {
+        const res = await joinCommunityMutation({ userId: user.id, communityId: cid })
+        res && setNotJoined(notJoined.filter((o) => o !== cid))
+      }
+
+      if (!isJoin) {
+        const res = await leaveCommunityMutation({ userId: user.id, communityId: cid })
+        res && setNotJoined([...notJoined, cid])
+      }
+    }
+  }
 
   const CommunityListing = (c: CommunityListType) => (
     <HStack key={c.id} cursor="pointer" w="full" px={2} py={1} justifyContent="space-between">
-      <HStack>
+      <HStack w="80%">
         {c.picture ? (
           <Image alt="pfp" src={c.picture} w="32px" h="32px" objectFit="cover" rounded="full" />
         ) : (
           <Circle size="32px" bg="purple.400" color="white" />
         )}
-        <Text>{c.name}</Text>
+        <Text isTruncated>{c.name}</Text>
       </HStack>
-      <IconButton aria-label="Join community" icon={<AddIcon />} variant="ghost" />
+
+      {notJoined.includes(c.id) ? (
+        <IconButton
+          aria-label="Join community"
+          icon={<AddIcon />}
+          variant="ghost"
+          onClick={() => handleClick(true, c.id)}
+        />
+      ) : (
+        <IconButton
+          aria-label="Leave community"
+          icon={<MinusIcon />}
+          variant="ghost"
+          onClick={() => handleClick(false, c.id)}
+        />
+      )}
     </HStack>
   )
 

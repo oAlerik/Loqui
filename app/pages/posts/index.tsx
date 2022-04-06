@@ -18,11 +18,11 @@ export default function Posts() {
 
   const newPost = async () => {
     console.log(session)
-    createPostMutation({
-      title: "New Post",
-      content: "This is a new post",
-      authorId: session.userId || 0,
-    })
+    // createPostMutation({
+    //   title: "New Post",
+    //   content: "This is a new post",
+    //   authorId: session.userId,
+    // })
   }
 
   const onSort = (sort: string) => {
