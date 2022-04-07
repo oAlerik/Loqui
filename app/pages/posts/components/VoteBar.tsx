@@ -34,7 +34,7 @@ export default function VoteBar({ post }: { post: Post }) {
         p={4}
         aria-label="upvote"
         variant="ghost"
-        icon={<Image alt="upvote" src="icons/arrow.png" />}
+        icon={<Image alt="upvote" src="/icons/arrow.png" />}
         onClick={() => handleVote(userVote === 1 ? VoteType.Reset : VoteType.Upvote)}
       />
       <Text>{votes + userVote}</Text>
@@ -44,7 +44,7 @@ export default function VoteBar({ post }: { post: Post }) {
         aria-label="downvote"
         variant="ghost"
         transform="rotate(180deg)"
-        icon={<Image alt="downvote" src="icons/arrow.png" />}
+        icon={<Image alt="downvote" src="/icons/arrow.png" />}
         onClick={() => handleVote(userVote === -1 ? VoteType.Reset : VoteType.Downvote)}
       />
     </VStack>

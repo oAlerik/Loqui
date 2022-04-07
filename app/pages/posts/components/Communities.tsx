@@ -1,11 +1,11 @@
 import { Box, Circle, Heading, HStack, IconButton, Image, Text, useToast } from "@chakra-ui/react"
 import { AddIcon, MinusIcon } from "@chakra-ui/icons"
-import getAllCommunities from "app/communities/queries/getAllCommunities"
+import getAllCommunities from "app/pages/j/queries/getAllCommunities"
 import getCurrentUser from "app/users/queries/getCurrentUser"
 import { useMutation, useQuery } from "blitz"
 import { useEffect, useState } from "react"
-import joinCommunity from "app/communities/mutations/joinCommunity"
-import leaveCommunity from "app/communities/mutations/leaveCommunity"
+import joinCommunity from "app/pages/j/mutations/joinCommunity"
+import leaveCommunity from "app/pages/j/mutations/leaveCommunity"
 
 type CommunityListType = {
   id: string
@@ -58,8 +58,8 @@ export default function Communities() {
   }
 
   const CommunityListing = (c: CommunityListType) => (
-    <HStack key={c.id} cursor="pointer" w="full" px={2} py={1} justifyContent="space-between">
-      <HStack w="80%">
+    <HStack key={c.id} px={2} py={1} w="full" justifyContent="space-between">
+      <HStack w="80%" cursor="pointer" onClick={() => (window.location.href = `j/${c.name}`)}>
         {c.picture ? (
           <Image alt="pfp" src={c.picture} w="32px" h="32px" objectFit="cover" rounded="full" />
         ) : (
