@@ -65,7 +65,7 @@ export default function CommunityBanner({ c, u }: { c: CommunityType; u: UserTyp
 
       <VStack w="80ch" align="start" py={4}>
         <HStack gap={4}>
-          <Image alt="pfp" src={c.picture} rounded="full" boxSize={100} />
+          <Image alt="pfp" src={c.picture} rounded="full" boxSize={100} border="1px solid #000" />
           <VStack align="start">
             <Heading>{c.title}</Heading>
             <Text>j/{c.name}</Text>

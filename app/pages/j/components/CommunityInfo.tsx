@@ -8,7 +8,7 @@ export default function CommunityInfo({ c }: { c: CommunityType }) {
   return (
     <Box bg="white" w="40ch" p={6} rounded={8}>
       <VStack align="start">
-        <Text>{c.description}</Text>
+        <Text mb={4}>{c.description}</Text>
         <HStack>
           <Image alt="members" src="/icons/members.png" boxSize={25} />
           <Text>

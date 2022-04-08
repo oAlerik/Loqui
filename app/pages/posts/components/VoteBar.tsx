@@ -28,7 +28,7 @@ export default function VoteBar({ post }: { post: Post }) {
   }
 
   return (
-    <VStack pr={2}>
+    <VStack pr={2} alignSelf="start">
       <IconButton
         w={50}
         p={4}

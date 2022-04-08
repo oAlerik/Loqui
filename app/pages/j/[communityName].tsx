@@ -1,4 +1,4 @@
-import { Box, Flex, Heading, HStack, Text, VStack } from "@chakra-ui/react"
+import { Box, Flex, VStack } from "@chakra-ui/react"
 import Layout from "app/core/layouts/Layout"
 import getCurrentUser from "app/users/queries/getCurrentUser"
 import { useParams, useQuery } from "blitz"
@@ -6,6 +6,7 @@ import PostEntry from "../posts/components/PostEntry"
 import getCommunityposts from "../posts/queries/getCommunityposts"
 import CommunityBanner from "./components/CommunityBanner"
 import CommunityInfo from "./components/CommunityInfo"
+import NoPosts from "./components/NoPosts"
 import getCommunity from "./queries/getCommunity"
 
 export default function Community() {
@@ -19,10 +20,13 @@ export default function Community() {
       <CommunityBanner c={community} u={user} />
 
       <Flex maxW="100ch" gap={6}>
-        <VStack w="60ch">
+        <VStack w="60ch" gap={2}>
           {posts.map((post) => PostEntry({ post: post, showCommunity: false }))}
+          {posts.length === 0 && <NoPosts />}
         </VStack>
-        <CommunityInfo c={community} />
+        <Box>
+          <CommunityInfo c={community} />
+        </Box>
       </Flex>
     </VStack>
   )

@@ -1,4 +1,4 @@
-import { Box, Button, Heading, HStack, Image, Text, VStack } from "@chakra-ui/react"
+import { Box, Button, Heading, HStack, Image, Link, Text, VStack } from "@chakra-ui/react"
 import { PromiseReturnType } from "blitz"
 import getAllPosts from "../queries/getAllPosts"
 import VoteBar from "./VoteBar"
@@ -18,7 +18,11 @@ export default function PostEntry({
         <VoteBar post={post} />
 
         <VStack align="start">
-          {showCommunity && <Text fontSize="xs">j/{post.community}</Text>}
+          {showCommunity && (
+            <Link href={`/j/${post.community}`}>
+              <Text fontSize="xs">j/{post.community}</Text>
+            </Link>
+          )}
           <Heading fontSize="lg">{post.title}</Heading>
           <Text fontSize={14}>{post.content}</Text>
 
