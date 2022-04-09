@@ -44,6 +44,7 @@ model Community {
   banner      String?
   members     User[]
   posts       Post[]
+  // owner       User
   createdAt   DateTime @default(now())
   // slug     String @unique
 }

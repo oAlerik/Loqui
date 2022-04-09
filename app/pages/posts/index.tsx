@@ -9,6 +9,7 @@ import getAllPosts from "./queries/getAllPosts"
 import PostEntry from "./components/PostEntry"
 import { useState } from "react"
 import Communities from "./components/Communities"
+import CreateBox from "./components/CreateBox"
 
 export default function Posts() {
   const session = useSession()
@@ -52,8 +53,10 @@ export default function Posts() {
           ))}
         </VStack>
 
+        {/* Sidebar stuff */}
         <VStack w="30ch">
           <Communities />
+          <CreateBox />
           <Text>HELP ETC.</Text>
         </VStack>
       </Flex>
